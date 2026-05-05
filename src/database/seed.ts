@@ -13,11 +13,13 @@ async function seed() {
   let connectionString = process.env.DATABASE_URL!
   if (!isLocal) {
     const url = new URL(connectionString)
-    const [ipv4] = await new Promise<string[]>((resolve, reject) =>
-      resolve4(url.hostname, (err, addrs) => (err ? reject(err) : resolve(addrs)))
+    const ipv4 = await new Promise<string | null>((resolve) =>
+      resolve4(url.hostname, (err, addrs) => resolve(err ? null : (addrs[0] ?? null)))
     )
-    url.hostname = ipv4
-    connectionString = url.toString()
+    if (ipv4) {
+      url.hostname = ipv4
+      connectionString = url.toString()
+    }
   }
 
   const client = postgresClient(connectionString, {
