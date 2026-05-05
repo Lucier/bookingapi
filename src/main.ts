@@ -12,7 +12,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ZodValidationPipe())
 
   app.enableCors({
-    origin: 'https://bookingweb-theta.vercel.app',
+    origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   })
