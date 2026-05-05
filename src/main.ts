@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { setDefaultResultOrder } from 'node:dns'
 setDefaultResultOrder('ipv4first')
 import { NestFactory } from '@nestjs/core'

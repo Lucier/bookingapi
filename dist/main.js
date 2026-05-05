@@ -1,5 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config");
+const node_dns_1 = require("node:dns");
+(0, node_dns_1.setDefaultResultOrder)('ipv4first');
 const core_1 = require("@nestjs/core");
 const swagger_1 = require("@nestjs/swagger");
 const nestjs_zod_1 = require("nestjs-zod");
