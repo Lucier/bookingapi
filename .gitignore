@@ -1,5 +1,12 @@
-node_modules
+node_modules/
 
-prompts
+prompts/
+
+dist/
+
+.vscode/
+.idea/
+
+
 
 .env
