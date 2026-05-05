@@ -1,4 +1,6 @@
 import 'dotenv/config'
+import { setDefaultResultOrder, resolve4 } from 'node:dns'
+setDefaultResultOrder('ipv4first')
 import { drizzle } from 'drizzle-orm/postgres-js'
 import * as postgres from 'postgres'
 import * as bcrypt from 'bcrypt'
@@ -7,7 +9,18 @@ import * as schema from './schema/index'
 async function seed() {
   const postgresClient = (postgres as any).default || postgres
   const isLocal = process.env.DATABASE_URL?.includes('localhost')
-  const client = postgresClient(process.env.DATABASE_URL!, {
+
+  let connectionString = process.env.DATABASE_URL!
+  if (!isLocal) {
+    const url = new URL(connectionString)
+    const [ipv4] = await new Promise<string[]>((resolve, reject) =>
+      resolve4(url.hostname, (err, addrs) => (err ? reject(err) : resolve(addrs)))
+    )
+    url.hostname = ipv4
+    connectionString = url.toString()
+  }
+
+  const client = postgresClient(connectionString, {
     ssl: isLocal ? false : 'require',
   })
   const db = drizzle(client, { schema })
