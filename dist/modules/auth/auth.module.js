@@ -12,11 +12,11 @@ const jwt_1 = require("@nestjs/jwt");
 const passport_1 = require("@nestjs/passport");
 const database_module_1 = require("../../database/database.module");
 const auth_controller_1 = require("./controllers/auth.controller");
-const auth_service_1 = require("./services/auth.service");
-const auth_repository_1 = require("./repositories/auth.repository");
-const jwt_strategy_1 = require("./strategies/jwt.strategy");
 const jwt_auth_guard_1 = require("./guards/jwt-auth.guard");
 const roles_guard_1 = require("./guards/roles.guard");
+const auth_repository_1 = require("./repositories/auth.repository");
+const auth_service_1 = require("./services/auth.service");
+const jwt_strategy_1 = require("./strategies/jwt.strategy");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -28,12 +28,18 @@ exports.AuthModule = AuthModule = __decorate([
             jwt_1.JwtModule.registerAsync({
                 useFactory: () => ({
                     secret: process.env.JWT_SECRET ?? 'dev-secret',
-                    signOptions: { expiresIn: '15m' },
+                    signOptions: { expiresIn: '1h' },
                 }),
             }),
         ],
         controllers: [auth_controller_1.AuthController],
-        providers: [auth_service_1.AuthService, auth_repository_1.AuthRepository, jwt_strategy_1.JwtStrategy, jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard],
+        providers: [
+            auth_service_1.AuthService,
+            auth_repository_1.AuthRepository,
+            jwt_strategy_1.JwtStrategy,
+            jwt_auth_guard_1.JwtAuthGuard,
+            roles_guard_1.RolesGuard,
+        ],
         exports: [jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard, jwt_1.JwtModule],
     })
 ], AuthModule);

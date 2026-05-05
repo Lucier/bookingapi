@@ -11,11 +11,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ZodValidationPipe())
 
-  app.enableCors({
-    origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-  })
+  app.enableCors()
 
   app.enableShutdownHooks()
 

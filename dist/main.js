@@ -9,11 +9,7 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.setGlobalPrefix('api/v1');
     app.useGlobalPipes(new zod_validation_pipe_1.ZodValidationPipe());
-    app.enableCors({
-        origin: '*',
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        credentials: true,
-    });
+    app.enableCors();
     app.enableShutdownHooks();
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Booking API')
