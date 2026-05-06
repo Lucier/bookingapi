@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import { join } from 'node:path'
 import { setDefaultResultOrder, resolve4 } from 'node:dns'
 setDefaultResultOrder('ipv4first')
 import { NestFactory } from '@nestjs/core'
@@ -31,7 +32,7 @@ async function runMigrations(): Promise<void> {
     prepare: false,
     max: 1,
   })
-  await migrate(drizzle(client), { migrationsFolder: './drizzle' })
+  await migrate(drizzle(client), { migrationsFolder: join(__dirname, 'drizzle') })
   await client.end()
 }
 

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
+const node_path_1 = require("node:path");
 const node_dns_1 = require("node:dns");
 (0, node_dns_1.setDefaultResultOrder)('ipv4first');
 const core_1 = require("@nestjs/core");
@@ -28,7 +29,7 @@ async function runMigrations() {
         prepare: false,
         max: 1,
     });
-    await (0, migrator_1.migrate)((0, postgres_js_1.drizzle)(client), { migrationsFolder: './drizzle' });
+    await (0, migrator_1.migrate)((0, postgres_js_1.drizzle)(client), { migrationsFolder: (0, node_path_1.join)(__dirname, 'drizzle') });
     await client.end();
 }
 async function bootstrap() {
